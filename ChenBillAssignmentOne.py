@@ -140,4 +140,3 @@ def solution_to_problem_five(A):
     return 0
 
 
-print("hi")
