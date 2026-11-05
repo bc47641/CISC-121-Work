@@ -1,36 +1,20 @@
 # Problem 1: CyclicRotation
-# PseudoCode:
 
-# Function solution_to_problem_one(A,K):
-#     If length of A is 0:
-#         Return A
-#.    length <-- length of A
-#     new_arr <-- array with size length filled with 0
-#     movement <-- length - (K % length)
-#     For i from 0 to length:
-#        If i + movement is greater or equal to length:
-#            calculate the new index by subtracting length from i + movement
-#        Else:  
-#           calculate the new index by adding i + movement
-# return the new_arr
-#
-#
-
-# Solution to problem 1:
-
-# A represents an array and K represents a integer
 def solution_to_problem_one(A,K):
 
+    # Return immediately if the array is empty to prevent errors
     if len(A) == 0:
         return A
-
+    
     length = len(A)
     new_arr = length * [0]
 
+    # Calculate backward shift to find which element rotates into the current index
     movement = length - (K % length)
 
     for i in range(length):
 
+        # This handles index wrap around if it exceeds array boundaries
         if i+movement >= length:
             new_arr[i] = A[i+movement - length]
         else:
@@ -42,49 +26,35 @@ def solution_to_problem_one(A,K):
 
 
 # Problem 2: OddOccurrencesInArray
-# PseudoCode:
-# Function solution_to_problem_two(A):
-#     If the length of A is equal to 0:
-#         Return zero 
-#     Sort array A
 
-#     For i from 0 to length of (A - 1) with the step size of 2:
-#         If index i of array A is not equal to index i + 1 of array A:
-#             Return index i of array A
-
-#     Return index of the last element of array A
-
-
-# Solution to problem 2:
 def solution_to_problem_two(A):
     if len(A) == 0:
         return 0
 
+    # Sorts the array to ascending order
     A.sort()
     
     for i in range(0, len(A)-1,2): 
+        # If elements in a pair don't match then the unpaired element is found
         if A[i] != A[i+1]:
             return A[i]
+
+    # If no mismatch is found earlier then the last element must be the unpaired one
     return A[-1]
 
 
 
 
 # Problem 3: FrogJmp
-# PseudoCode:
-# Function solution_to_problem_three(X,Y,D):
-#     distance <-- Y - X
-#     count <-- distance // D
 
-#     If remainder of distance divided by D is not equal to 0:
-#         count is added by 1
-
-#     Return the total count
-
-# Solution to problem 3:
 def solution_to_problem_three(X, Y, D):
+    # Calculate the total distance that needs to be covered
     distance = Y-X
+
+    # Find the minimum number of full jumps needed using floor division
     count = distance // D
+
+    # Add one extra jump if there is a remaining non whole number of jumps
     if distance % D != 0:
         count+=1
 
@@ -94,49 +64,35 @@ def solution_to_problem_three(X, Y, D):
 
 
 # Problem 4: PermMissingElem
-# PseudoCode
-# Function solution_to_problem_four(A):
-#     length <-- length of array A
-#     expected_length <-- length + 1
-#     actual_sum <-- (1+expected_length) multiply by expected_length then divide 2
 
-#     Return actual_sum - the sum of array A
-
-# Solution to problem 4:
 def solution_to_problem_four(A):
     length = len(A)
     expected_length = length + 1
+
+    # Calculate actual sum using the arithmetic progression formula
     actual_sum = (1+expected_length) * expected_length // 2
 
+    # The missing number is the difference between the expected sum and actual sum
     return actual_sum - sum(A)    
 
 
-# Problem 5: PermCheck
-# PseudoCode
-# Function solution_to_problem_five(A):
-#     If the length of the set of A is not equal to the length of A:
-#         Return 0
-#     length <-- length of A
-#     sorted_a <-- sort array A
-#     max_val <-- last element of sorted_a
-#     actual_sum <-- (1+max_val) multiply by max_val then divide 2
-#     If actual_sum - sum of A is equal to 0:
-#         Return 1
-#     Return 0
 
-# Solution to problem 5:
+# Problem 5: PermCheck
+
 def solution_to_problem_five(A):
 
+    # If duplicate values exist, it cannot be a valid permutation sequence
     if len(set(A)) != len(A):
         return 0
 
     length = len(A)
     sorted_a = sorted(A)
     max_val = sorted_a[length-1]
+
+    # Calculate expected sum from 1 to max_val
     actual_sum = (1+max_val)*max_val // 2
 
+    # Verify if the sum of the array matches the expected sum for a valid permutation
     if(actual_sum - sum(A)) == 0:
         return 1
     return 0
-
-
